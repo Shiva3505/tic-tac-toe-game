@@ -1,0 +1,133 @@
+/** @format */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#head {
+  color: #f2e9e4;
+}
+body {
+  padding-top: 20px;
+  background-color: #4a4e69;
+  text-align: center;
+}
+
+.container {
+  height: 70vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  height: 60vmin;
+  width: 60vmin;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1vmin;
+}
+
+.box {
+  height: 18vmin;
+  width: 18vmin;
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 0 0 1rem rgbe(0, 0, 0, 0.3);
+  font-size: 8vmin;
+  align-items: center;
+  color: #22223b;
+  background-color: #f2e9e4;
+}
+
+#new_game {
+  gap: 1rem;
+  padding: 1rem;
+  font-size: 1.25rem;
+  background-color: #191913;
+  color: #fff;
+  border-radius: 1rem;
+  border: none;
+}
+#msg {
+  color: #f2e9e4;
+  font-size: 5vmin;
+}
+
+.msg-container {
+  height: 96vmin;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.hide {
+  display: none;
+}
+
+.box.x {
+  background-color: #6c757d;
+  color: #22223b;
+}
+
+.box.o {
+  background-color: #adb5bd;
+  color: #1d3557;
+}
+
+#player1 {
+  background-color: #22223b;
+  border-radius: 0.67rem;
+  font-size: 1rem;
+  height: 40px;
+  text-align: center;
+  margin-top: 20px;
+  display: inline block;
+  width: 120px;
+  gap: 10px;
+  color: #fff;
+}
+#player2 {
+  background-color: #22223b;
+  color: #fff;
+  border-radius: 0.67rem;
+  text-align: center;
+  font-size: 1rem;
+  height: 40px;
+  margin-top: 20px;
+  display: inline block;
+  width: 120px;
+  gap: 10px;
+}
+#start_btn {
+  padding: 1rem;
+  font-size: 1.25rem;
+  background-color: #22223b;
+  color: #fff;
+  border-radius: 1rem;
+  border: none;
+  margin-top: 20px;
+  display: inline block;
+  gap: 10px;
+}
+#reset_btn {
+  padding: 1rem;
+  font-size: 1.25rem;
+  background-color: #22223b;
+  color: #fff;
+  border-radius: 1rem;
+  border: none;
+  margin-top: 10px;
+  display: inline block;
+  gap: 10px;
+}
+.scoreboard {
+  color: #f2e9e4;
+}
