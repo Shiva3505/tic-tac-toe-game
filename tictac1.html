@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #board {
+            display: grid;
+            grid-template-columns: repeat(3, 110px);
+            grid-template-rows: repeat(3, 110px);
+            gap: 8px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            border: 3px solid #2c3e50;
+            border-radius: 8px;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        .cell:hover {
+            background-color: #ecf0f1;
+            transform: scale(1.05);
+        }
+        .cell.filled {
+            animation: scaleIn 0.3s ease;
+        }
+        .cell.winner {
+            animation: bounce 0.5s ease infinite;
+            background-color: #2ecc71;
+            color: white;
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        #status {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        #restart {
+            padding: 12px 24px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        #restart:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="status">Player X's turn</div>
+        <div id="board"></div>
+        <button id="restart">Restart Game</button>
+    </div>
+
+    <script>
+        const board = document.getElementById('board');
+        const status = document.getElementById('status');
+        const restart = document.getElementById('restart');
+
+        let gameBoard = Array(9).fill(null);
+        let currentPlayer = 'X';
+        let gameOver = false;
+
+        function initBoard() {
+            board.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                cell.addEventListener('click', handleClick);
+                board.appendChild(cell);
+            }
+        }
+
+        function handleClick(e) {
+            const index = e.target.dataset.index;
+            if (gameBoard[index] || gameOver) return;
+
+            gameBoard[index] = currentPlayer;
+            e.target.textContent = currentPlayer;
+            e.target.classList.add('filled');
+
+            if (checkWin()) {
+                status.textContent = `Player ${currentPlayer} wins!`;
+                gameOver = true;
+                highlightWinningCells();
+            } else if (gameBoard.every(cell => cell)) {
+                status.textContent = "It's a draw!";
+                gameOver = true;
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                status.textContent = `Player ${currentPlayer}'s turn`;
+            }
+        }
+
+        function checkWin() {
+            const wins = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
+            ];
+            return wins.some(combo => 
+                combo.every(i => gameBoard[i] === currentPlayer)
+            );
+        }
+
+        function highlightWinningCells() {
+            const wins = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
+            ];
+            const winningCombo = wins.find(combo => 
+                combo.every(i => gameBoard[i] === currentPlayer)
+            );
+            if (winningCombo) {
+                winningCombo.forEach(i => {
+                    board.children[i].classList.add('winner');
+                });
+            }
+        }
+
+        function resetGame() {
+            gameBoard = Array(9).fill(null);
+            currentPlayer = 'X';
+            gameOver = false;
+            status.textContent = `Player ${currentPlayer}'s turn`;
+            initBoard();
+        }
+
+        restart.addEventListener('click', resetGame);
+        initBoard();
+    </script>
+</body>
+</html>
